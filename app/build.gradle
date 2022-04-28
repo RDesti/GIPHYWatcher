@@ -49,6 +49,9 @@ dependencies {
     implementation("androidx.paging:paging-runtime:$paging_version")
     implementation "androidx.recyclerview:recyclerview:$recycler_view_version"
 
+    implementation "androidx.navigation:navigation-fragment:$navigation_version"
+    implementation "androidx.navigation:navigation-ui:$navigation_version"
+
     implementation "com.squareup.picasso:picasso:$picasso_lib_version"
     implementation "com.airbnb.android:lottie:$lottie_lib_version"
 

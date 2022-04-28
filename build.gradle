@@ -35,4 +35,5 @@ ext {
     coroutines = '1.6.0'
     picasso_lib_version = '2.71828'
     lottie_lib_version = '4.0.0'
+    navigation_version = '2.5.0-beta01'
 }
