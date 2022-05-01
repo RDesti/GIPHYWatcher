@@ -1,6 +1,5 @@
 package com.example.giphywatcher.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -12,16 +11,16 @@ import com.example.giphywatcher.R
 import com.example.giphywatcher.databinding.ItemGifsListLayoutBinding
 import com.example.giphywatcher.entity.GifContentModel
 
-class GifsListFragmentAdapter(val context: Context,
-                              private val itemClickListener: (GifContentModel) -> Unit
+class GifsListFragmentAdapter(
+    private val itemClickListener: (GifContentModel) -> Unit
 ) : PagingDataAdapter<GifContentModel, GifsListFragmentAdapter.GifsListViewHolder>(DataDiffItemCallback) {
 
     class GifsListViewHolder(val itemBinding: ItemGifsListLayoutBinding) :
             RecyclerView.ViewHolder(itemBinding.root) {
 
-                fun bind(context: Context, gifContentModel: GifContentModel, itemClickListener: (GifContentModel) -> Unit) {
+                fun bind(gifContentModel: GifContentModel, itemClickListener: (GifContentModel) -> Unit) {
                     if (!gifContentModel.url.isNullOrEmpty()) {
-                        Glide.with(context).load(gifContentModel.url).into(itemBinding.imageView)
+                        Glide.with(itemBinding.root).load(gifContentModel.url).into(itemBinding.imageView)
                     } else {
                         //todo added default image
                     }
@@ -34,7 +33,7 @@ class GifsListFragmentAdapter(val context: Context,
 
     override fun onBindViewHolder(holder: GifsListViewHolder, position: Int) {
         getItem(position)?.let {
-            holder.bind(context, it, itemClickListener)
+            holder.bind(it, itemClickListener)
         }
     }
 
@@ -42,7 +41,7 @@ class GifsListFragmentAdapter(val context: Context,
         DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_gifs_list_layout, parent, false)
     )
 
-    private object DataDiffItemCallback : DiffUtil.ItemCallback<GifContentModel>() {
+    object DataDiffItemCallback : DiffUtil.ItemCallback<GifContentModel>() {
         override fun areItemsTheSame(oldItem: GifContentModel, newItem: GifContentModel): Boolean {
             return oldItem.id == newItem.id
         }

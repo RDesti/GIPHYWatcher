@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">GIPHYWatcher</string>
+    <string name="error_footer"><u>Oops…something went wrong…Retry?</u></string>
 </resources>
