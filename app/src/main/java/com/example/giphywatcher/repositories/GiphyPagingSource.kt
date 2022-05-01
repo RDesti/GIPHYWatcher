@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 class GiphyPagingSource @Inject constructor(
     private val giphyDataRequester: IGiphyDataRequester,
-    private val searchKey: String
+    //private val searchKey: String
 ) : PagingSource<Int, Data>() {
     override fun getRefreshKey(state: PagingState<Int, Data>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
@@ -26,7 +26,7 @@ class GiphyPagingSource @Inject constructor(
         val offset = (page - 1) * AppDefaultValues.DEFAULT_LOAD_ITEMS_LIMIT
 
         return try {
-            val responseModel = giphyDataRequester.sendRequest(searchKey, offset)
+            val responseModel = giphyDataRequester.sendRequest(AppDefaultValues.searchCondition, offset)
             if (responseModel == null || !responseModel.isSuccessful) {
                 return LoadResult.Error(HttpException(responseModel))
             } else {
