@@ -22,10 +22,12 @@ class GifPreviewFragment : Fragment() {
 
     private var _binding: FragmentGifPreviewBinding? = null
     private val binding get() = _binding!!
-    private var currentPage = 0
+    private var currentPage: Int = 0
 
     private val _viewModel by lazy { ViewModelProvider(this)[GifsListViewModel::class.java] }
     private var _adapter: GifPreviewAdapter? = null
+
+    private var isFirstOpen = true
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,6 +36,7 @@ class GifPreviewFragment : Fragment() {
     ): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_gif_preview, container, false)
         binding.lifecycleOwner = this
+        currentPage = arguments?.get("position") as Int
         return binding.root
     }
 
@@ -47,7 +50,12 @@ class GifPreviewFragment : Fragment() {
                 ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
-                    currentPage = position
+                    if (isFirstOpen) {
+                        currentItem = currentPage
+                        isFirstOpen = false
+                    } else {
+                        currentPage = position
+                    }
                 }
             })
         }

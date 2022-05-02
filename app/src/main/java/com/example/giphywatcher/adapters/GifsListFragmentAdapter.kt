@@ -12,13 +12,13 @@ import com.example.giphywatcher.databinding.ItemGifsListLayoutBinding
 import com.example.giphywatcher.entity.GifContentModel
 
 class GifsListFragmentAdapter(
-    private val itemClickListener: (GifContentModel) -> Unit
+    private val itemClickListener: (GifContentModel, Int) -> Unit
 ) : PagingDataAdapter<GifContentModel, GifsListFragmentAdapter.GifsListViewHolder>(DataDiffItemCallback) {
 
     class GifsListViewHolder(val itemBinding: ItemGifsListLayoutBinding) :
             RecyclerView.ViewHolder(itemBinding.root) {
 
-                fun bind(gifContentModel: GifContentModel, itemClickListener: (GifContentModel) -> Unit) {
+                fun bind(gifContentModel: GifContentModel, position: Int, itemClickListener: (GifContentModel, Int) -> Unit) {
                     if (!gifContentModel.url.isNullOrEmpty()) {
                         Glide.with(itemBinding.root).load(gifContentModel.url).into(itemBinding.imageView)
                     } else {
@@ -26,14 +26,14 @@ class GifsListFragmentAdapter(
                     }
 
                     itemBinding.imageView2.setOnClickListener {
-                        itemClickListener(gifContentModel)
+                        itemClickListener(gifContentModel, position)
                     }
                 }
             }
 
     override fun onBindViewHolder(holder: GifsListViewHolder, position: Int) {
         getItem(position)?.let {
-            holder.bind(it, itemClickListener)
+            holder.bind(it, position, itemClickListener)
         }
     }
 

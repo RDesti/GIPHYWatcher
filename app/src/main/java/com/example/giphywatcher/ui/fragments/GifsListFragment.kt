@@ -154,7 +154,7 @@ class GifsListFragment : Fragment() {
     }
 
     private fun initAdapter() {
-        _adapter = GifsListFragmentAdapter { model -> clickOnItem(model) }
+        _adapter = GifsListFragmentAdapter { model, position -> clickOnItem(model, position) }
         binding.recycler.layoutManager = LinearLayoutManager(requireContext())
         binding.recycler.adapter = _adapter?.withLoadStateHeaderAndFooter(
             header = GifListLoadStateAdapter { _adapter?.retry() },
@@ -162,9 +162,10 @@ class GifsListFragment : Fragment() {
         )
     }
 
-    private fun clickOnItem(model: GifContentModel) {
+    private fun clickOnItem(model: GifContentModel, position: Int) {
     //todo
-        val bundle = bundleOf("url" to model.url)
+        val bundle = bundleOf("url" to model.url,
+        "position" to position)
         this.findNavController()
             .navigate(R.id.action_gifsListFragment_to_gifPreviewFragment, bundle)
     }

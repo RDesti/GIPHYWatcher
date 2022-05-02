@@ -15,12 +15,5 @@ class GiphyDataRepository @Inject constructor(
 ) : IGiphyDataRepository {
     override fun getDataFromGiphy(searchKey: String): PagingSource<Int, Data> {
         return giphyPagingSource.create(searchKey)
-        /*return Pager(
-            config = PagingConfig(
-                pageSize = 5,
-                enablePlaceholders = false
-            ),
-            pagingSourceFactory = {giphyPagingSource.create(searchKey)}
-        ).flow*/
     }
 }
