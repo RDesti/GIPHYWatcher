@@ -5,13 +5,16 @@ import androidx.paging.PagingState
 import com.example.giphywatcher.constants.AppDefaultValues
 import com.example.giphywatcher.network.parseModels.Data
 import com.example.giphywatcher.requesters.IGiphyDataRequester
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-class GiphyPagingSource @Inject constructor(
+class GiphyPagingSource @AssistedInject constructor(
     private val giphyDataRequester: IGiphyDataRequester,
-    //private val searchKey: String
+    @Assisted("searchKey") private val searchKey: String
 ) : PagingSource<Int, Data>() {
     override fun getRefreshKey(state: PagingState<Int, Data>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
@@ -26,7 +29,8 @@ class GiphyPagingSource @Inject constructor(
         val offset = (page - 1) * AppDefaultValues.DEFAULT_LOAD_ITEMS_LIMIT
 
         return try {
-            val responseModel = giphyDataRequester.sendRequest(AppDefaultValues.searchCondition, offset)
+            val responseModel = giphyDataRequester.sendRequest(searchKey, offset)
+
             if (responseModel == null || !responseModel.isSuccessful) {
                 return LoadResult.Error(HttpException(responseModel))
             } else {
@@ -47,5 +51,10 @@ class GiphyPagingSource @Inject constructor(
         } catch (exception: HttpException) {
             return LoadResult.Error(exception)
         }
+    }
+
+    @AssistedFactory
+    interface Factory {
+        fun create(@Assisted("searchKey") searchKey: String): GiphyPagingSource
     }
 }

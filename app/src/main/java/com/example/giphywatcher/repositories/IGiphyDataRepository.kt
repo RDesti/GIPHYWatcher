@@ -1,9 +1,10 @@
 package com.example.giphywatcher.repositories
 
 import androidx.paging.PagingData
+import androidx.paging.PagingSource
 import com.example.giphywatcher.network.parseModels.Data
 import kotlinx.coroutines.flow.Flow
 
 interface IGiphyDataRepository {
-    fun getDataFromGiphy(): Flow<PagingData<Data>>
+    fun getDataFromGiphy(searchKey: String): PagingSource<Int, Data>
 }

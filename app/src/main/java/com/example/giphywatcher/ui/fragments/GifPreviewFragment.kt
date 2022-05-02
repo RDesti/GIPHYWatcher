@@ -52,8 +52,8 @@ class GifPreviewFragment : Fragment() {
         }
 
         lifecycleScope.launchWhenCreated {
-            _viewModel.getData().collectLatest {
-                _adapter?.submitData(it)
+            _viewModel.state.collectLatest {
+                _adapter?.submitData(it.pagingData)
             }
         }
     }
