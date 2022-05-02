@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.example.giphywatcher.R
 import com.example.giphywatcher.adapters.GifPreviewAdapter
@@ -55,6 +56,18 @@ class GifPreviewFragment : Fragment() {
             _viewModel.state.collectLatest {
                 _adapter?.submitData(it.pagingData)
             }
+        }
+
+        initListeners()
+    }
+
+    private fun initListeners() {
+        binding.imageBack.setOnClickListener {
+            this.findNavController().navigateUp()
+        }
+
+        binding.imageDelete.setOnClickListener {
+            //todo
         }
     }
 

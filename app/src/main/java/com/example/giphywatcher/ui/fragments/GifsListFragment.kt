@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.giphywatcher.R
 import com.example.giphywatcher.adapters.GifListLoadStateAdapter
 import com.example.giphywatcher.adapters.GifsListFragmentAdapter
+import com.example.giphywatcher.constants.AppDefaultValues
 import com.example.giphywatcher.databinding.FragmentGifsListBinding
 import com.example.giphywatcher.entity.GifContentModel
 import com.example.giphywatcher.entity.UiAction
@@ -106,6 +107,7 @@ class GifsListFragment : Fragment() {
             if (it.isNotEmpty()) {
                 binding.recycler.scrollToPosition(0)
                 onSearchKeyChanged(UiAction.Search(searchKey = it.toString()))
+                AppDefaultValues.CURRENT_SEARCH_KEY = it.toString()
             }
         }
     }

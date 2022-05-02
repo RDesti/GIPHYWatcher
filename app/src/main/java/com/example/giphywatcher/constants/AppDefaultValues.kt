@@ -6,4 +6,5 @@ object AppDefaultValues {
     const val LAST_SEARCH_QUERY: String = "last_search_query"
     const val DEFAULT_SEARCH_KEY = "Hello"
     const val LAST_QUERY_SCROLLED: String = "last_query_scrolled"
+    var CURRENT_SEARCH_KEY: String? = null
 }

@@ -4,7 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.*
-import com.example.giphywatcher.constants.AppDefaultValues.DEFAULT_SEARCH_KEY
+import com.example.giphywatcher.constants.AppDefaultValues
 import com.example.giphywatcher.constants.AppDefaultValues.LAST_QUERY_SCROLLED
 import com.example.giphywatcher.constants.AppDefaultValues.LAST_SEARCH_QUERY
 import com.example.giphywatcher.entity.GifContentModel
@@ -29,8 +29,9 @@ class GifsListViewModel @Inject constructor(
     private var newPagingSource: PagingSource<*, *>? = null
 
     init {
-        val initialQuery: String = savedStateHandle[LAST_SEARCH_QUERY] ?: DEFAULT_SEARCH_KEY
-        val lastQueryScrolled: String = savedStateHandle[LAST_QUERY_SCROLLED] ?: DEFAULT_SEARCH_KEY
+        val currentSearchKey: String = AppDefaultValues.CURRENT_SEARCH_KEY ?: AppDefaultValues.DEFAULT_SEARCH_KEY
+        val initialQuery: String = savedStateHandle[LAST_SEARCH_QUERY] ?: currentSearchKey
+        val lastQueryScrolled: String = savedStateHandle[LAST_QUERY_SCROLLED] ?: currentSearchKey
         val actionStateFlow = MutableSharedFlow<UiAction>()
         val searches = actionStateFlow
             .filterIsInstance<UiAction.Search>()
