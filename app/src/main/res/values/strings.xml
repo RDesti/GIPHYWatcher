@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">GIPHYWatcher</string>
+    <string name="error_footer"><u>Oops…something went wrong…Retry?</u></string>
+    <string name="search_hint">Please enter text</string>
 </resources>
