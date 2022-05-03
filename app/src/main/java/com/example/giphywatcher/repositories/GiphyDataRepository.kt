@@ -22,11 +22,11 @@ class GiphyDataRepository @Inject constructor(
     //working with remoteMediator
     @OptIn(ExperimentalPagingApi::class)
     override fun getSearchResultFromRemoteMediator(searchKey: String): Flow<PagingData<Data>> {
-        val pagingSourceFactory = { dataBase.giphyDataDao().getModelsBySearch(searchKey) }
+        val key = "%${searchKey.replace(' ', '%')}%"
         return Pager(
             config = PagingConfig(pageSize = 5, enablePlaceholders = false),
             remoteMediator = giphyRemoteMediator.create(searchKey),
-            pagingSourceFactory = pagingSourceFactory
+            pagingSourceFactory = { dataBase.giphyDataDao().getModelsBySearch(key) }
         ).flow
     }
 }

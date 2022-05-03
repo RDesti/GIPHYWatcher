@@ -34,7 +34,8 @@ class GifPreviewFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_gif_preview, container, false)
+        _binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_gif_preview, container, false)
         binding.lifecycleOwner = this
         currentPage = arguments?.get("position") as Int
         return binding.root
@@ -61,8 +62,8 @@ class GifPreviewFragment : Fragment() {
         }
 
         lifecycleScope.launchWhenCreated {
-            _viewModel.state.collectLatest {
-                _adapter?.submitData(it.pagingData)
+            _viewModel.pagingDataFlow.collectLatest {
+                _adapter?.submitData(it)
             }
         }
 

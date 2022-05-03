@@ -13,23 +13,29 @@ import com.example.giphywatcher.entity.GifContentModel
 
 class GifsListFragmentAdapter(
     private val itemClickListener: (GifContentModel, Int) -> Unit
-) : PagingDataAdapter<GifContentModel, GifsListFragmentAdapter.GifsListViewHolder>(DataDiffItemCallback) {
+) : PagingDataAdapter<GifContentModel, GifsListFragmentAdapter.GifsListViewHolder>(
+    DataDiffItemCallback
+) {
 
     class GifsListViewHolder(val itemBinding: ItemGifsListLayoutBinding) :
-            RecyclerView.ViewHolder(itemBinding.root) {
+        RecyclerView.ViewHolder(itemBinding.root) {
 
-                fun bind(gifContentModel: GifContentModel, position: Int, itemClickListener: (GifContentModel, Int) -> Unit) {
-                    if (!gifContentModel.url.isNullOrEmpty()) {
-                        Glide.with(itemBinding.root).load(gifContentModel.url).into(itemBinding.imageView)
-                    } else {
-                        //todo added default image
-                    }
-
-                    itemBinding.imageView2.setOnClickListener {
-                        itemClickListener(gifContentModel, position)
-                    }
-                }
+        fun bind(
+            gifContentModel: GifContentModel,
+            position: Int,
+            itemClickListener: (GifContentModel, Int) -> Unit
+        ) {
+            if (!gifContentModel.url.isNullOrEmpty()) {
+                Glide.with(itemBinding.root).load(gifContentModel.url).into(itemBinding.imageView)
+            } else {
+                //todo added default image
             }
+
+            itemBinding.root.setOnClickListener {
+                itemClickListener(gifContentModel, position)
+            }
+        }
+    }
 
     override fun onBindViewHolder(holder: GifsListViewHolder, position: Int) {
         getItem(position)?.let {
@@ -38,7 +44,12 @@ class GifsListFragmentAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = GifsListViewHolder(
-        DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_gifs_list_layout, parent, false)
+        DataBindingUtil.inflate(
+            LayoutInflater.from(parent.context),
+            R.layout.item_gifs_list_layout,
+            parent,
+            false
+        )
     )
 
     object DataDiffItemCallback : DiffUtil.ItemCallback<GifContentModel>() {
